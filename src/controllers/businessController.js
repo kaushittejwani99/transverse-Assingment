@@ -1,24 +1,12 @@
 const Joi = require('joi');
 const business = require('../dbModels/businessModel');  // Assuming you have a Mongoose business model
 const{createToken}=require("../../jwt");
+const {validateBusiness}=require("../helpers/validation");
 
 exports.registerBusiness = async (req, res) => {
   try {
-    // Define the validation schema using Joi, matching the fields in the Mongoose schema
-    const businessSchema = Joi.object({
-      businessName: Joi.string().min(3).max(50).required(),
-      country: Joi.string().required(),
-      state: Joi.string().required(),
-      city: Joi.string().required(),
-      address: Joi.string().required(),
-      openingTime: Joi.string().required(),    // e.g., "09:00 AM"
-      closingTime: Joi.string().required(),    // e.g., "06:00 PM"
-      email: Joi.string().required(),  // Email validation
-      mobileNumber: Joi.string().required()    // Assuming phone number validation is done elsewhere
-    });
-
-    // Validate the incoming request data
-    const { error } = businessSchema.validate(req.body, { abortEarly: false });
+   // Validate the incoming request data
+    const { error } = validateBusiness.validate(req.body, { abortEarly: false });
     if (error) {
       return res.status(400).json({
         message: "Validation failed",
