@@ -19,14 +19,15 @@ const validateBusiness = (data) => {
 
 const validateOwner = (data) => {
   const schema = Joi.object({
-    fullName: Joi.string().min(3).max(50).required(),
+    businessName: Joi.string().min(3).max(50).required(),
     country: Joi.string().required(),
-    email: Joi.string().email().required(),
-    mobileNumber: Joi.string().required(),
-    city:Joi.string().required(),
-    state:Joi.string().required(),
-    address:Joi.string().required()
-
+    state: Joi.string().required(),
+    city: Joi.string().required(),
+    address: Joi.string().required(),
+    openingTime: Joi.string().required(),    // e.g., "09:00 AM"
+    closingTime: Joi.string().required(),    // e.g., "06:00 PM"
+    email: Joi.string().required(),  // Email validation
+    mobileNumber: Joi.string().required()    // Assuming phone number validation is done elsewhere
   });
 
   return schema.validate(data, { abortEarly: false });
